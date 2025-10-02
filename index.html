@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Chlorine v0.3</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward" />
+    <link rel="icon" href="logo.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dir">
+        <span>Games Directory</span>
+        <div class="x"><h1>X</h1></div>
+        <h2 class="placeholder"></h2>
+        <h2 class="dir-text">All directories run using port 443 by default<br>Remember to use cln:// instead of https://<br><br>
+            cln://big-tower-tiny-square.io<br>
+            cln://big-tower-tiny-square2.io<br>
+            cln://big-ice-tower.io<br>
+            cln://big-flappy-tower.io<br>
+            cln://big-neon-tower.io<br><br>
+        </h2>
+    </div>
+
+    <div class="info">
+        <span>Connection Info</span>
+        <div class="x"><h1>X</h1></div>
+        <p class="ip-info">Loading...</p>
+        <img src="github.svg" width="20%">
+    </div>
+
+    <div class="container">
+        <div class="title">
+            <img src="logo.png" alt="Logo" style="height: 15vh;">
+            <h1>Chlorine <br><span style="color: #bdbdbd;">v0.3</span></h1>
+        </div>
+
+        <input type="text" placeholder="Use cln://" class="search-bar" autocomplete="off">
+    </div>
+
+    <div class="footer">
+        <button class="dir-button">
+            <h1>Games Directory</h1>
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+
+        <div class="glow"></div>
+
+        <button class="info-button">
+            <h1>Connection Info</h1>
+            <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+    </div>
+        
+    <script>
+        
+        const input = document.querySelector('.search-bar');
+        const dirButton = document.querySelector('.dir-button');
+        const infoButton = document.querySelector('.info-button');
+        const materialSymbolsOutlined = document.querySelector('.material-symbols-outlined');
+        const materialSymbolsOutlinedInfo = infoButton.querySelector('.material-symbols-outlined');
+        const dir = document.querySelector('.dir');
+        const info = document.querySelector('.info');
+        const xs = document.querySelectorAll('.x');
+        const glow = document.querySelector('.glow');
+
+        input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+        dir.style.animation = 'popup 0.2s ease-out forwards';
+        dir.style.display = 'block';
+        }
+        });
+
+        dirButton.addEventListener('mouseover', () => {
+        glow.style.left = '6px';
+        glow.style.display = 'block';
+        glow.style.animation = 'rotate 3s linear infinite' + ', enlarge 0.5s ease-out normal forwards';
+        });
+
+        infoButton.addEventListener('mouseover', () => {
+        glow.style.left = '337px';
+        glow.style.display = 'block';
+        glow.style.animation = 'rotate 3s linear infinite' + ', enlarge 0.5s ease-out normal forwards';
+        });
+
+        dirButton.addEventListener('mouseout', () => {
+        glow.style.display = 'none';
+        });
+        
+        infoButton.addEventListener('mouseout', () => {
+        glow.style.display = 'none';
+        });
+
+        dirButton.addEventListener('click', () => {
+        dir.style.animation = 'popup 0.2s ease-out forwards';
+        dir.style.display = 'block';
+        });
+
+        infoButton.addEventListener('click', () => {
+        info.style.animation = 'popup 0.2s ease-out forwards';
+        info.style.display = 'block';
+        });
+
+        xs.forEach(btn => {
+        btn.addEventListener('click', () => {
+        const panel = btn.closest('.dir') || btn.closest('.info');
+        if (panel) panel.style.display = 'none';
+        });
+        });
+
+        fetch('https://ipwho.is/?format=json/')
+        .then(response => response.json())
+        .then(data => {
+            const city = data.city;
+            const country = data.country;
+            const region = data.region_code;
+            const isp = data.connection.isp;
+            const ip = data.ip;
+            const postal = data.postal;
+
+            document.querySelector('.ip-info').innerText = `${ip}\n${isp}\n${city} ${region}, ${country}, ${postal}`;
+        })
+        .catch(error => {
+            document.querySelector('.ip-info').innerText = 'Error :/';
+        });
+
+    </script>
+</body>
+</html> 
