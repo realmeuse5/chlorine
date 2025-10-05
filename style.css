@@ -4,6 +4,7 @@ html {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     background-color: #1c1c1d;
+    overflow: hidden;
 }
 
 body {
@@ -22,8 +23,8 @@ body {
     align-items: center;
     transform: translateY(-10vh);
     width: 60vw;
-    height: 40vh;
-    gap: 90px;
+    height: 35vh;
+    gap: 10vh;
 }
 
 .title {
@@ -41,16 +42,14 @@ body {
 
 .search-bar {
     width: 45vw;
-    height: 5vh;
-    background: 
-    linear-gradient(#232324, #232324) padding-box,
-    linear-gradient(45deg, #ff00cc, #3333ff) border-box;
+    height: 5.5vh;
+    background:  #303032;
     border: 2px solid transparent;
-    border-radius: 15px;
+    border-radius: 20px;
     font-size: 1.5vw;
     padding: 0.5vw;
     padding-left: 1vw;
-    color: white;
+    color: rgb(216, 216, 216);
     box-shadow: 0 0 20px #171717;
 }
 
@@ -65,7 +64,7 @@ body {
 .footer {
     display: flex;
     position: fixed;
-    bottom: 15vh;
+    bottom: 22vh;
     height: 15vh;
     width: 47vw;
     justify-content: center;
@@ -82,7 +81,7 @@ body {
 
 .dir-button {
     display: flex;
-    height: 8vh;
+    height: 7.5vh;
     width: 20vw;
     background: #232324;
     align-items: center;
@@ -103,7 +102,7 @@ body {
 
 .info-button {
     display: flex;
-    height: 8vh;
+    height: 7.5vh;
     width: 20vw;
     background: #232324;
     align-items: center;
@@ -122,6 +121,40 @@ body {
     display: block;
 }
 
+.download {
+    display: none;
+    flex-direction: row;
+    position: absolute;
+    right: 3vh;
+    bottom: 3vh;
+    height: 8vh;
+    width: 20vw;
+    background: #232324;
+    border-radius: 10px;
+    border: none;
+    z-index: 1;
+    gap: 2vw;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.download h1 {
+    color: #bdbdbd;
+    font-size: 2.5vh;
+    font-weight: 400;
+}
+
+.download:hover {
+    background: #2a2a2b;
+    cursor: pointer;
+}
+
+.download:hover > span {
+    animation: slide 0.5s ease-out normal forwards;
+    display: block;
+}
+
 @property --deg {
     syntax: '<angle>';
     inherits: false;
@@ -132,7 +165,7 @@ body {
     display: none;
     position: absolute;
     width: 20vw;
-    height: 8vh;
+    height: 7.5vh;
     background: conic-gradient(from var(--deg) at center, #ff00cc, #3333ff, #3333ff, #ff00cc);
     border-radius: 10px;
     filter: blur(3px);
@@ -207,6 +240,46 @@ body {
     font-size: 2.5vh;
 }
 
+.load {
+    display: none;
+    position: fixed;
+    height: 30vh;
+    width: 40vw;
+    background: #232324;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #171717;
+    padding: 1.5vw;
+    z-index: 10;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.load span {
+    color: white;
+    font-family: 'poppins', sans-serif;
+}
+
+.loading-container {
+    width: 50%;
+    height: 5%;
+    background: #bdbdbd;
+    position: relative;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.loading-bar {
+    width: 30%;
+    height: 100%;
+    background: #1a1a1b;
+    position: absolute;
+    animation: load 1.2s ease-in-out infinite alternate;
+}
+
 .x {
     position: absolute;
     top: 0;
@@ -240,6 +313,13 @@ body {
     margin-right: 2vw;
 }
 
+iframe {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    outline: none;
+}
+
 @keyframes enlarge {
     0% { transform: scale(1); }
     100% { transform: scale(1.05); }
@@ -252,11 +332,21 @@ body {
 
 @keyframes slide {
     0% { transform: translateX(-1vw); }
-    100% { transform: translateY(0); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes slide-in {
+    0% { transform: translateX(5vw); opacity: 50%; }
+    100% { transform: translateX(0); opacity: 100%; }
 }
 
 @keyframes rotate {
     to {
         --deg: 360deg;
     }
+}
+
+@keyframes load {
+  0% { left: 0%; }
+  100% { left: 70%; }
 }
