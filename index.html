@@ -5,7 +5,7 @@
     <title>Chlorine v0.3</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
     <link rel="icon" href="logo.png">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -31,6 +31,11 @@
         <img src="github.svg" width="20%">
     </div>
 
+    <div class="load">
+        <span>Loading or something...</span>
+        <div class="loading-container"><div class="loading-bar"></div></div>
+    </div>
+
     <div class="container">
         <div class="title">
             <img src="logo.png" alt="Logo" style="height: 15vh;">
@@ -53,9 +58,14 @@
             <span class="material-symbols-outlined">arrow_forward</span>
         </button>
     </div>
-        
+
+        <a class="download" href="logo.png" download="ChlorineInstaller.exe">
+            <h1>Download</h1> 
+            <span class="material-symbols-outlined" style="margin-right: 0;">download</span>
+        </a>
+
     <script>
-        
+     
         const input = document.querySelector('.search-bar');
         const dirButton = document.querySelector('.dir-button');
         const infoButton = document.querySelector('.info-button');
@@ -65,24 +75,47 @@
         const info = document.querySelector('.info');
         const xs = document.querySelectorAll('.x');
         const glow = document.querySelector('.glow');
+        const download = document.querySelector('.download');
+        const load = document.querySelector('.load');
 
+        // Search bar result
         input.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-        dir.style.animation = 'popup 0.2s ease-out forwards';
-        dir.style.display = 'block';
+        const url = input.value.trim();
+        load.style.animation = 'popup 0.2s ease-out forwards';
+        load.style.display = 'flex';
+
+        (async () => {
+        await new Promise(r => setTimeout(r, 3000));
+        load.style.display = 'none';
+
+        if (url === 'cln://big-tower-tiny-square.io') {
+        window.open('btts.html', 'newwindow', 'width=1000, height=600');
+        } else {
+        window.open('https://error', 'newwindow', 'width=1000, height=600');
         }
-        });
+
+        })();
+        }});
+
+        // Glow
+        function showGlow(left) {
+        Object.assign(glow.style, {
+            width: '20vw',
+            height: '7.5vh',
+            top: '0',
+            left,
+            display: 'block',
+            animation: 'rotate 3s linear infinite, enlarge 0.5s ease-out forwards'
+        }); 
+        }
 
         dirButton.addEventListener('mouseover', () => {
-        glow.style.left = '6px';
-        glow.style.display = 'block';
-        glow.style.animation = 'rotate 3s linear infinite' + ', enlarge 0.5s ease-out normal forwards';
+        showGlow('0.5vw');
         });
 
         infoButton.addEventListener('mouseover', () => {
-        glow.style.left = '337px';
-        glow.style.display = 'block';
-        glow.style.animation = 'rotate 3s linear infinite' + ', enlarge 0.5s ease-out normal forwards';
+        showGlow('26.5vw');
         });
 
         dirButton.addEventListener('mouseout', () => {
@@ -93,6 +126,7 @@
         glow.style.display = 'none';
         });
 
+        // Clicking on a button
         dirButton.addEventListener('click', () => {
         dir.style.animation = 'popup 0.2s ease-out forwards';
         dir.style.display = 'block';
@@ -102,7 +136,20 @@
         info.style.animation = 'popup 0.2s ease-out forwards';
         info.style.display = 'block';
         });
+        
+        // Download button
+        window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+        download.style.display = 'flex';
+        download.style.animation = 'slide-in 0.2s ease-out forwards';
+        }, 1000);
+        });
 
+        download.addEventListener('click', () => {
+        download.style.display = 'none';    
+        });
+        
+        // Close button
         xs.forEach(btn => {
         btn.addEventListener('click', () => {
         const panel = btn.closest('.dir') || btn.closest('.info');
@@ -110,20 +157,21 @@
         });
         });
 
+        // IP info fetch request
         fetch('https://ipwho.is/?format=json/')
         .then(response => response.json())
         .then(data => {
-            const city = data.city;
-            const country = data.country;
-            const region = data.region_code;
-            const isp = data.connection.isp;
-            const ip = data.ip;
-            const postal = data.postal;
+        const city = data.city;
+        const country = data.country;
+        const region = data.region_code;
+        const isp = data.connection.isp;
+        const ip = data.ip;
+        const postal = data.postal;
 
-            document.querySelector('.ip-info').innerText = `${ip}\n${isp}\n${city} ${region}, ${country}, ${postal}`;
+        document.querySelector('.ip-info').innerText = `${ip}\n${isp}\n${city} ${region}, ${country}, ${postal}`;
         })
         .catch(error => {
-            document.querySelector('.ip-info').innerText = 'Error :/';
+        document.querySelector('.ip-info').innerText = 'Error :/';
         });
 
     </script>
